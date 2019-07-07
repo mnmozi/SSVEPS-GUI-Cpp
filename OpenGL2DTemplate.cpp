@@ -22,6 +22,12 @@ bool box2Mode;
 bool box4Mode;
 bool box5Mode;
 
+
+bool phaseOne; 
+bool phaseTwo;
+bool phaseThree;
+bool mainPhase;
+
 float freq1 = ((1.0 / 12.0) / 2.0) * 1000;
 float freq2 = ((1.0 / 10.0) / 2.0) * 1000;
 float freq4 = ((1.0 / 7.6) / 2.0) * 1000;
@@ -29,7 +35,7 @@ float freq5 = ((1.0 / 6.6) / 2.0) * 1000;
 
 void square(float x1, float y1  , float x2, float y2, float x3, float y3,float x4, float y4) {
 	glPushMatrix();
-	glColor3f(255, 0, 255);
+	glColor3f(0, 225, 0);
 	glBegin(GL_POLYGON);
 	glVertex3f(x1, y1, 0.0);
 	glVertex3f(x2, y2, 0.0);
@@ -92,7 +98,7 @@ void Display() {
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	if (newDataBool) {
-		//std::cout << clientData;
+		std::cout << clientData;
 		newDataBool = false;
 		if (clientData.at(0) == 'a' ) {
 			testBox = clientData.at(1);
@@ -100,21 +106,74 @@ void Display() {
 			boxNumber = testBox;
 			dot = true;
 			std::cout << "Now the arrow should point at Box number: "<< testBox << "\n";
+
+
+			phaseOne = false;
+			phaseTwo = false;
+			phaseThree = false;
+			mainPhase = false;
 		}
 		else if (clientData.at(0) == 'g') {
 			arrow = false;
 			dot = false;
 			allBoxes = true;
+
+
+			phaseOne = false;
+			phaseTwo = false;
+			phaseThree = false;
+			mainPhase = false;
 		}
 		else if (clientData.at(0) == 'p') {
 			dot = false;
 			arrow = false;
 			allBoxes = false;
+
+
+			phaseOne = false;
+			phaseTwo = false;
+			phaseThree = false;
+			mainPhase = false;
+
 		}
+		//New interface 
+		else if (clientData.at(0) == '1') {
+			phaseOne = true;
+			dot = false;
+			arrow - false;
+			allBoxes = false;
+
+		}
+		else if (clientData.at(0) == '2') {
+			phaseTwo = true;
+			dot = false;
+			arrow - false;
+			allBoxes = false;
+
+		}
+		else if (clientData.at(0) == '3') {
+			phaseThree = true;
+			dot = false;
+			arrow - false;
+			allBoxes = false;
+
+		}
+		else if (clientData.at(0) == '0') {
+			mainPhase = true;
+			dot = false;
+			arrow - false;
+			allBoxes = false;
+		}
+
+
+
+
 		else { // can add here to improve for letters
+
 			allBoxes = true;
 			arrow = false;
 			std::cout << "all boxes" << "\n";
+
 		}
 	}
 
@@ -142,10 +201,37 @@ void Display() {
 	}
 	else {
 
-			point(10.0f, 255, 255, 255, 200, 800);
-			point(10.0f, 255, 255, 255, 800, 800);
-			point(10.0f, 255, 255, 255, 200, 200);
-			point(10.0f, 255, 255, 255, 800, 200);
+
+			if (mainPhase) {
+				print(175, 800, "Questions");
+				print(775, 800, "Subjects");
+				print(175, 200, "Verbs");
+				print(775, 200, "Spell");
+			}
+			else if (phaseOne) {
+				print(175, 800, "what");
+				print(775, 800, "who");
+				print(175, 200, "how");
+				print(775, 200, "why");
+			}
+			else if (phaseTwo) {
+				print(175, 800, "You");
+				print(775, 800, "I");
+				print(175, 200, "They");
+				print(775, 200, "We");
+			}
+			else if (phaseThree) {
+				print(175, 800, "Do");
+				print(775, 800, "Drink");
+				print(175, 200, "Eat");
+				print(775, 200, "No");
+			}
+			else {
+				point(10.0f, 255, 255, 255, 200, 800);
+				point(10.0f, 255, 255, 255, 800, 800);
+				point(10.0f, 255, 255, 255, 200, 200);
+				point(10.0f, 255, 255, 255, 800, 200);
+			}
 
 		/*
 		point(10.0f, 255, 255, 255, 100, 800);
@@ -219,6 +305,7 @@ void Display() {
 			//square(175, 50, 225, 50, 225, 140, 175, 140);
 			//point(10000.f, 0, 255, 0, 200, 75);
 		}
+
 
 	}
 
